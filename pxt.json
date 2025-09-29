@@ -1,0 +1,15 @@
+{
+  "name": "grove-smart-ir-gesture",
+  "version": "0.1.0",
+  "description": "Driver for Seeed Grove Smart IR Gesture (PAG7661QN) for micro:bit",
+  "license": "MIT",
+  "dependencies": {
+    "core": "*"
+  },
+  "files": [
+    "main.ts",
+    "README.md"
+  ],
+  "public": true
+}
+a
