@@ -77,4 +77,51 @@ namespace groveGesture {
      * Cursor X (11-bit)
      */
     //% block="cursor X"
-    //% weight=80 group="Readouts
+    //% weight=80 group="Readouts"
+    export function cursorX(): number {
+        const xLo = rdU8(0x59)
+        const hi  = rdU8(0x61)
+        const xHi = hi & 0x07 // bits 2..0
+        return (xHi << 8) | xLo
+    }
+
+    /**
+     * Cursor Y (11-bit)
+     */
+    //% block="cursor Y"
+    //% weight=79 group="Readouts"
+    export function cursorY(): number {
+        const yLo = rdU8(0x5A)
+        const hi  = rdU8(0x61)
+        const yHi = (hi >> 3) & 0x07 // bits 5..3
+        return (yHi << 8) | yLo
+    }
+
+    /**
+     * Accumulated rotation angle (signed 16-bit)
+     */
+    //% block="rotation angle (acc)"
+    //% weight=78 group="Readouts"
+    export function angleAccum(): number {
+        const lsb = rdU8(0x5C)
+        const msb = rdI8(0x5D) // signed
+        return (msb << 8) | lsb
+    }
+
+    // --- Optional: quick helper for simple feedback on LED matrix ---
+    /**
+     * Demo: show icons for thumb up/down on LED matrix (polling)
+     */
+    //% block="demo show icons (polling)"
+    //% weight=50 group="Demo"
+    export function demoShowIcons() {
+        control.inBackground(function () {
+            while (true) {
+                if (thumbUp()) basic.showIcon(IconNames.Happy)
+                else if (thumbDown()) basic.showIcon(IconNames.Sad)
+                else basic.clearScreen()
+                basic.pause(120)
+            }
+        })
+    }
+}
